@@ -11,4 +11,45 @@
              WHERE BNO > 0
         ]]>
     </select>
+
+    <insert id="insert">
+        INSERT INTO TBL_BOARD
+        (
+            bno,
+            title,
+            content,
+            writer
+        )
+        VALUES
+        (
+            seq_board.nextval,
+            #{title},
+            #{content},
+            #{writer}
+        )
+    </insert>
+
+    <insert id="insertSelectKey">
+
+        <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+            SELECT
+                   seq_board.nextval
+              FROM dual
+        </selectKey>
+
+        INSERT INTO TBL_BOARD
+        (
+            bno,
+            title,
+            content,
+            writer
+        )
+        VALUES
+        (
+            #{bno},
+            #{title},
+            #{content},
+            #{writer}
+        )
+    </insert>
 </mapper>

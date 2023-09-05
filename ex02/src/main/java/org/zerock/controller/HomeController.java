@@ -42,10 +42,7 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date);
 
-		List<BoardVO> boardVOList = boardService.getList();
-
 		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("boardVOList", boardVOList);
 		
 		return "home";
 	}
