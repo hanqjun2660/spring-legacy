@@ -2,14 +2,18 @@ package org.zerock.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.zerock.domain.BoardVO;
+import org.zerock.service.BoardService;
 
 /**
  * Handles requests for the application home page.
@@ -18,7 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
+	private final BoardService boardService;
+
+	@Autowired
+	public HomeController(BoardService boardService) {
+		this.boardService = boardService;
+	}
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -30,8 +41,11 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
+
+		List<BoardVO> boardVOList = boardService.getList();
+
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("boardVOList", boardVOList);
 		
 		return "home";
 	}
