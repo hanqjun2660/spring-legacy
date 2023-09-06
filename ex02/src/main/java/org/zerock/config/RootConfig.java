@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan(basePackages = "org.zerock.service")
+@ComponentScan(basePackages = {"org.zerock.service"})
 @MapperScan(basePackages = {"org.zerock.mapper"})
 public class RootConfig {
 
