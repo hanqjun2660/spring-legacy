@@ -1,23 +1,18 @@
 package org.zerock.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
-import org.zerock.mapper.BoardMapper;
 
 import java.util.List;
 
-@Service
-public class BoardService {
+public interface BoardService {
 
-    private final BoardMapper mapper;
+    public void register(BoardVO board);
 
-    @Autowired
-    public BoardService(BoardMapper mapper) {
-        this.mapper = mapper;
-    }
+    public BoardVO get(Long bno);
 
-    public List<BoardVO> getList() {
-        return mapper.getList();
-    }
+    public boolean modify(BoardVO board);
+
+    public boolean remove(Long bno);
+
+    public List<BoardVO> getList();
 }
