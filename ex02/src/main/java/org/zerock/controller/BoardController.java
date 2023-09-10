@@ -1,8 +1,6 @@
 package org.zerock.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +37,7 @@ public class BoardController {
 
         boardService.register(boardVO);
 
-        rttr.addAttribute("result", boardVO.getBno());
+        rttr.addFlashAttribute("result", boardVO.getBno());
 
         return "redirect:/board/list";
     }
@@ -68,5 +66,10 @@ public class BoardController {
             rttr.addFlashAttribute("result", "success");
         }
         return "redirect:/board/list";
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        return "/board/register";
     }
 }
