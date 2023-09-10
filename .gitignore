@@ -12,3 +12,6 @@ dev/
 **/.classpath
 **/.project
 **/.springBeans
+
+#BootStrap Templates
+**/webapp/resources/*
