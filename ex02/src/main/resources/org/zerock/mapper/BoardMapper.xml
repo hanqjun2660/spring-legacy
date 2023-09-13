@@ -12,6 +12,26 @@
         ]]>
     </select>
 
+    <sql id="criteria">
+        <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title like '%' || #{keyword} || '%'
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            content like '%' || #{keyword} || '%'
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writer like '%' || #{keyword} || '%'
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+    
     <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
         <![CDATA[
             SELECT
@@ -31,8 +51,14 @@
                            regdate,
                            updatedate
                       FROM TBL_BOARD
-                     WHERE ROWNUM <= #{pageNum} * #{amount})
-             WHERE rn > (#{pageNum} - 1) * #{amount}
+                     WHERE
+        ]]>
+        
+            <include refid="criteria"></include>
+        
+        <![CDATA[
+                           ROWNUM <= #{pageNum} * #{amount})
+            WHERE rn > (#{pageNum} - 1) * #{amount}
         ]]>
     </select>
 
