@@ -19,6 +19,15 @@ import java.util.stream.IntStream;
 @Slf4j
 public class SampleController {
 
+    /*
+        HTTP의 전송방식을 알아두자.
+        REST 방식의 데이터 교환에서는 GET/POST 방식 외의 다양한 방식으로 데이터를 전달한다.
+        CREATE -> POST(HTTP)
+        READ - > GET(HTTP)
+        UPDATE -> PUT(HTTP)
+        DELETE - > DELETE(HTTP)
+     */
+
     /**
      * produces : 매서드가 생산하는 MIME 타입을 의미한다.
      * MediaType클래스를 이용하여 MIME 타입을 지정할수도 있다.
@@ -97,5 +106,4 @@ public class SampleController {
         log.info("convert.......ticket" + ticket);
         return ticket;
     }
-
 }
