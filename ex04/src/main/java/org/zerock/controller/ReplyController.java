@@ -1,6 +1,8 @@
 package org.zerock.controller;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,5 +45,32 @@ public class ReplyController {
         log.info(String.valueOf(cri));
 
         return new ResponseEntity<>(replyService.getList(cri, bno), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{rno}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno) {
+        log.info("get........" + rno);
+        return new ResponseEntity<>(replyService.get(rno), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{rno}", produces = { MediaType.TEXT_PLAIN_VALUE })
+    public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
+        log.info("remove.........." + rno);
+        return replyService.remove(rno) == 1 ? new ResponseEntity<>("sucess", HttpStatus.OK) : new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH },
+                    value = "/{rno}",
+                    consumes = "application/json",
+                    produces = { MediaType.TEXT_PLAIN_VALUE })
+    public ResponseEntity<String> modify(@PathVariable("rno") Long rno, @RequestBody ReplyVO vo) {
+        log.info("modify.............." + rno);
+
+        vo.setRno(rno);
+
+        log.info("rno : " + rno);
+        log.info("vo : " + vo);
+
+        return replyService.modify(vo) == 1 ? new ResponseEntity<>("sucess", HttpStatus.OK) : new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
