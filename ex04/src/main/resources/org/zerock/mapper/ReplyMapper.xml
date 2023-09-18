@@ -28,4 +28,17 @@
            SET reply = #{reply}, updatedate = SYSDATE
          WHERE rno = #{rno}
     </update>
+
+    <select id="getListwithPaging" resultType="org.zerock.domain.ReplyVO">
+        SELECT
+               rno,
+               bno,
+               reply,
+               replyer,
+               replyDate,
+               updateDate
+          FROM TBL_REPLY
+         WHERE bno = #{bno}
+         ORDER BY rno asc
+    </select>
 </mapper>

@@ -7,8 +7,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.ReplyVO;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
@@ -65,5 +67,15 @@ public class ReplyMapperTests {
         replyVO.setReplyer("업데이트된 작성자");
 
         log.info(replyMapper.update(replyVO));
+    }
+
+    @Test
+    public void testList() {
+
+        Criteria cri = new Criteria();
+
+        List<ReplyVO> list = replyMapper.getListwithPaging(cri, bnoArr[0]);
+
+        list.forEach(reply -> log.info(reply));
     }
 }
