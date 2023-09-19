@@ -71,6 +71,6 @@ public class ReplyController {
         log.info("rno : " + rno);
         log.info("vo : " + vo);
 
-        return replyService.modify(vo) == 1 ? new ResponseEntity<>("sucess", HttpStatus.OK) : new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        return replyService.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

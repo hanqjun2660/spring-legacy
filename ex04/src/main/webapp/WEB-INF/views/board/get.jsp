@@ -68,6 +68,34 @@
             alert("RESULT: " + result);
         }
     );
+
+    replyService.getList({bno:bnoValue, page:1}, function (list) {
+        for(var i = 0, len = list.length || 0; i < len; i++) {
+            console.log(list[i]);
+        }
+    });
+
+    replyService.remove(62, function (message) {
+        if (message === 'success') {
+            alert("REMOVED");
+        }
+    }, function(err) {
+        alert('ERROR...');
+    })
+
+    replyService.update({
+       rno : 64,
+       bno : bnoValue,
+       reply: "update reply....."
+    }, function (message) {
+        if(message === 'success') {
+            alert("UPDATE COMPLITE");
+        }
+    });
+
+    replyService.get(64, function (data) {
+        console.log(data);
+    });
 </script>
 
 <script type="text/javascript">
