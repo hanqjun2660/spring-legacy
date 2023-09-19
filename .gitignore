@@ -15,4 +15,4 @@ dev/
 
 #BootStrap Templates
 **/webapp/resources/*
-!webapp/resources/js/reply.js
+!/webapp/resources/js/reply.js
