@@ -23,6 +23,7 @@ var replyService = (function() {
         });
     }
 
+
     function getList(param, callback, error) {
         var bno = param.bno;
         var page = param.page || 1;
