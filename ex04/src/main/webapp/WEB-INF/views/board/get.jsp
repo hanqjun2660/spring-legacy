@@ -120,7 +120,7 @@
 
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     console.log("==========================");
     console.log("JS TEST");
 
@@ -160,7 +160,7 @@
     replyService.get(64, function (data) {
         console.log(data);
     });
-</script>
+</script>--%>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -218,6 +218,66 @@
             modalRegisterBtn.show();
 
             $(".modal").modal("show");
+        });
+
+        modalRegisterBtn.on('click', function (e) {
+            var reply = {
+                reply : modalInputReply.val(),
+                replyer : modalInputReplyer.val(),
+                bno : bnoValue
+            };
+
+            replyService.add(reply, function (result) {
+               alert(result);
+
+               modal.find("input").val("");
+               modal.modal("hide");
+
+               showList(1);
+            });
+        });
+
+        // DOM이 동적으로 생성되기 때문에 이벤트 위임 형태로 작성하여 처리
+        $(".chat").on('click', 'li', function (e) {
+           var rno = $(this).data("rno");
+           console.log(rno);
+
+           replyService.get(rno, function (reply) {
+               modalInputReply.val(reply.reply);
+               modalInputReplyer.val(reply.replyer).attr('readonly', 'readonly');
+               modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
+                   .attr('readonly', 'readonly');
+               modal.data("rno", reply.rno);
+
+               modal.find("button[id != 'modalCloseBtn']").hide();
+               modalModBtn.show();
+               modalRemoveBtn.show();
+
+               $(".modal").modal("show");
+           });
+        });
+
+        modalModBtn.on('click', function(e) {
+           var reply = {
+               rno : modal.data("rno"),
+               reply : modalInputReply.val(),
+           };
+
+           replyService.update(reply, function (result) {
+              alert(result);
+              modal.modal("hide");
+              showList(1);
+           });
+        });
+
+        modalRemoveBtn.on('click', function (e) {
+           var rno = modal.data("rno");
+
+           replyService.remove(rno, function (result) {
+               alert(result);
+               modal.modal("hide");
+               showList(1);
+           });
         });
 
     });

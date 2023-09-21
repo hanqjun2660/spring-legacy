@@ -30,15 +30,23 @@
     </update>
 
     <select id="getListwithPaging" resultType="org.zerock.domain.ReplyVO">
-        SELECT
-               rno,
-               bno,
-               reply,
-               replyer,
-               replyDate,
-               updateDate
-          FROM TBL_REPLY
-         WHERE bno = #{bno}
-         ORDER BY rno asc
+         <![CDATA[
+            SELECT rno, bno, reply, replyer, replyDate, updateDate
+              FROM(
+                  SELECT /*+INDEX(tbl_reply idx_reply) */
+                         rownum rn,
+                         rno,
+                         bno,
+                         reply,
+                         replyer,
+                         replyDate,
+                         updateDate
+                    FROM tbl_reply
+                   WHERE BNO = #{bno}
+                     AND rno > 0
+                     AND rownum <= #{cri.pageNum} * #{cri.amount}
+                  )
+             WHERE rn > (#{cri.pageNum} - 1) * #{cri.amount}
+         ]]>
     </select>
 </mapper>
